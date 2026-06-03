@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Window-to-Wall Ratio Calculator — Area Schedule Builder</title>
+  <meta name="description" content="Calculate window-to-wall ratio (WWR) from glazing area and gross wall area for facade and energy checks.">
+  <link rel="canonical" href="https://area.caddrawingdownload.com/tools/window-wall-ratio/">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Window-to-Wall Ratio Calculator — Area Schedule Builder">
+  <meta property="og:description" content="Calculate window-to-wall ratio (WWR) from glazing area and gross wall area for facade and energy checks.">
+  <meta property="og:url" content="https://area.caddrawingdownload.com/tools/window-wall-ratio/">
+  <meta name="google-adsense-account" content="ca-pub-0268893833921284">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0268893833921284" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+  <nav class="nav" aria-label="Primary"><a href="../../">Home</a><a href="../../tools/" aria-current="page">Tools</a><a href="../../library/">Library</a><a href="../../guides/">Guides</a><a href="../../workspace/">Workspace</a><a href="../../tool/" class="cta">Open the app</a></nav>
+</header>
+<main>
+<section class="hero">
+<div class="hero-copy"><div class="breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../tools/">Tools</a><span>/</span>Window-to-Wall Ratio Calculator</div><p class="eyebrow">Performance</p><h1>Window-to-Wall Ratio Calculator</h1><p class="lede">Divide glazing area by gross facade area to get window-to-wall ratio — a key energy and daylight metric.</p>
+<div class="hero-meta"><div><strong>30–45%</strong><span>Typical</span></div><div><strong>WWR %</strong><span>Output</span></div></div>
+</div>
+<div class="hero-art"><svg viewBox="0 0 480 340" role="img" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0f766e"/></linearGradient></defs><rect width="480" height="340" fill="none"/><g stroke="#1f5a52" stroke-width="1"><line x1="0" y1="0" x2="0" y2="340"/><line x1="40" y1="0" x2="40" y2="340"/><line x1="80" y1="0" x2="80" y2="340"/><line x1="120" y1="0" x2="120" y2="340"/><line x1="160" y1="0" x2="160" y2="340"/><line x1="200" y1="0" x2="200" y2="340"/><line x1="240" y1="0" x2="240" y2="340"/><line x1="280" y1="0" x2="280" y2="340"/><line x1="320" y1="0" x2="320" y2="340"/><line x1="360" y1="0" x2="360" y2="340"/><line x1="400" y1="0" x2="400" y2="340"/><line x1="440" y1="0" x2="440" y2="340"/><line x1="0" y1="0" x2="480" y2="0"/><line x1="0" y1="40" x2="480" y2="40"/><line x1="0" y1="80" x2="480" y2="80"/><line x1="0" y1="120" x2="480" y2="120"/><line x1="0" y1="160" x2="480" y2="160"/><line x1="0" y1="200" x2="480" y2="200"/><line x1="0" y1="240" x2="480" y2="240"/><line x1="0" y1="280" x2="480" y2="280"/><line x1="0" y1="320" x2="480" y2="320"/></g><g fill="none" stroke="#7fe9dc" stroke-width="2"><path d="M70 250V110l90-40 90 40v140" /><path d="M250 250V150l120 30v70" fill="rgba(45,212,191,0.06)"/><path d="M70 250h300"/><rect x="100" y="160" width="50" height="50" stroke="#f6c886"/><rect x="170" y="160" width="50" height="50" stroke="#f6c886"/><path d="M160 70v60"/></g><g fill="#f6c886"><circle cx="70" cy="250" r="4"/><circle cx="160" cy="70" r="4"/><circle cx="250" cy="250" r="4"/><circle cx="370" cy="250" r="4"/></g><text x="40" y="300" fill="#7fe9dc" font-family="monospace" font-size="13">AREA SCHEDULE · m²</text></svg></div>
+</section>
+<div class="section"><section class="tool-shell" id="tool">
+  <div class="tool-panel">
+    <div class="panel-heading"><h2>Inputs</h2><span class="pill">Live</span></div>
+    <div class="fields-grid" id="toolFields"></div>
+  </div>
+  <div class="result-panel">
+    <div class="result-toolbar">
+      <h2>Result</h2>
+      <div class="toolbar-row">
+        <button class="button secondary" id="copyExport" type="button">Copy output</button>
+        <button class="button secondary" type="button" data-save-current>Save</button>
+        <button class="button" type="button" data-download-current>Download</button>
+      </div>
+    </div>
+    <div id="toolResult"></div>
+  </div>
+</section></div>
+<aside class="ad-unit" aria-label="Advertisement">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0268893833921284" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <span class="ad-label">Advertisement</span>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</aside>
+<section class="section"><div class="example-grid" id="examples"></div></section>
+<section class="section"><div class="grid-2"><div class="content-band"><div class="section-heading"><h2>Good to know</h2></div><ul class="checklist" id="limits"></ul></div><div class="content-band"><div class="section-heading"><h2>FAQ</h2></div><div id="faq"></div></div></div></section>
+<section class="section"><div class="section-head"><h2>Related tools &amp; guides</h2><p>Keep the workflow moving with connected calculators and references.</p></div>
+  <div class="grid-3"><a class="hub-card" href="../../tools/hvac-load/"><div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="10" rx="2"/><path d="M7 18c0 1.5-1 2-1 2M12 18c0 1.5-1 2-1 2M17 18c0 1.5-1 2-1 2M6 8h2M11 8h2M16 8h2"/></svg></div><h3>HVAC Load</h3><p>Cooling estimate</p><span class="go">Open →</span></a><a class="hub-card" href="../../tools/lighting-load/"><div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c.8.8 1 1.4 1 2h6c0-.6.2-1.2 1-2A6 6 0 0 0 12 3z"/></svg></div><h3>Lighting Load</h3><p>Watts</p><span class="go">Open →</span></a></div></section>
+</main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="../../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+      <p>A free studio of browser-side calculators, schedules, and references for architectural area takeoff and CAD drawing production.</p>
+    </div>
+    <div class="footer-col"><h4>Popular tools</h4><a href="../../tool/">Area Schedule Builder</a><a href="../../tools/room-area/">Room Area Calculator</a><a href="../../tools/area-unit-converter/">Area Unit Converter</a><a href="../../tools/gross-net-area/">Gross to Net Area</a><a href="../../tools/">All tools</a></div><div class="footer-col"><h4>Reference</h4><a href="../../library/area-units/">Area Units</a><a href="../../library/drawing-symbols/">Drawing Symbols</a><a href="../../library/architectural-scales/">Architectural Scales</a><a href="../../library/glossary/">Glossary</a></div><div class="footer-col"><h4>Studio</h4><a href="../../workspace/">Workspace</a><a href="../../templates/">Templates</a><a href="../../reports/">Reports</a><a href="../../plans/">Plans</a><a href="../../privacy/">Privacy</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 caddrawingdownload.com · Area Schedule Builder</span><span>Browser-side tools · No account required</span></div>
+</footer>
+<script>window.SITE_CONFIG = {"title":"Window-to-Wall Ratio Calculator","kind":"calculator","fields":[{"id":"glazing","label":"Total glazing area (m²)","type":"number","default":"60","step":"any"},{"id":"wall","label":"Gross external wall area (m²)","type":"number","default":"200","step":"any"}],"data":{},"engine":{"outputs":[{"label":"Window-to-wall ratio","expr":"glazing/wall*100","format":"percent"},{"label":"Solid wall area","expr":"wall-glazing","unit":"m²","secondary":true}],"rules":[{"if":"glazing/wall*100 > 60","text":"Above 60% WWR usually needs high-performance glazing and shading to manage heat gain."},{"if":"glazing/wall*100 < 20","text":"Below 20% WWR may under-light interiors; check daylight factor."}],"defaultAdvice":"Balance daylight, views, and thermal performance — many codes cap WWR or require trade-offs."},"examples":[{"title":"Energy model","body":"Provide WWR to the energy consultant for early facade decisions."},{"title":"Code check","body":"Test a curtain-wall concept against prescriptive WWR limits."}],"faq":[{"q":"Gross or net wall?","a":"WWR typically uses gross facade area including the glazing itself."},{"q":"Per facade or whole building?","a":"Both are useful — orientation-specific WWR matters for solar gain."}],"limits":["Results are planning estimates — confirm against local codes, project standards, and supplier data before issue.","Tools run entirely in your browser; nothing you type is uploaded or stored on a server.","Advertising is kept clear of input controls and primary action buttons."]};</script>
+<script src="../../app.js"></script>
+<script src="../../saas.js"></script>
+</body>
+</html>

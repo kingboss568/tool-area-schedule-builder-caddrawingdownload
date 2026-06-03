@@ -3,38 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Settings | Area Schedule Builder</title>
-  <meta name="description" content="Local preferences for units, currency, labels, and workspace naming.">
+  <title>Settings — Area Schedule Builder</title>
+  <meta name="description" content="Set defaults like your organisation name and preferred units, stored locally in this browser.">
   <link rel="canonical" href="https://area.caddrawingdownload.com/settings/">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Settings — Area Schedule Builder">
+  <meta property="og:description" content="Set defaults like your organisation name and preferred units, stored locally in this browser.">
+  <meta property="og:url" content="https://area.caddrawingdownload.com/settings/">
   <meta name="google-adsense-account" content="ca-pub-0268893833921284">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0268893833921284" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="../styles.css">
 </head>
-<body style="--bg:#f5f4ef;--panel:#fffdf8;--ink:#232827;--accent:#3b745f;--accent-2:#b57931;--line:#d2d4cb">
-  <header class="topbar">
-    <a class="brand" href="../"><span class="brand-mark">AR</span><span>caddrawingdownload.com</span></a>
-    <nav class="nav" aria-label="Primary">
-      <a href="../tool/">Tool</a>
-      <a href="../templates/">Templates</a>
-      <a href="../workspace/">Workspace</a>
-      <a href="../plans/">Plans</a>
-    </nav>
-  </header>
-  <main>
-    <section class="app-grid"><nav class="side-nav" aria-label="App sections"><a href="../" >Dashboard</a><a href="../tool/" >Tool</a><a href="../workspace/" >Workspace</a><a href="../templates/" >Templates</a><a href="../reports/" >Reports</a><a href="../library/" >Library</a><a href="../examples/" >Examples</a><a href="../checklists/" >Checklists</a><a href="../integrations/" >Integrations</a><a href="../settings/" aria-current="page">Settings</a><a href="../plans/" >Plans</a><a href="../faq/" >FAQ</a></nav><div class="workspace-main"><div class="page-title-panel"><p class="eyebrow">Drawing Studio</p><h1>Settings</h1><p class="lede">Local preferences for units, currency, labels, and workspace naming.</p></div><div class="ad-unit" aria-label="Advertisement"><span>Advertisement</span></div><div class="workspace-card">
-    <div class="mini-form">
-      <label>Workspace name<input data-setting="workspaceName" data-default="My workspace"></label>
-      <label>Currency<select data-setting="currency" data-default="USD"><option>USD</option><option>TWD</option><option>EUR</option><option>JPY</option></select></label>
-      <label>Units<select data-setting="units" data-default="Metric + Imperial"><option>Metric + Imperial</option><option>Metric</option><option>Imperial</option></select></label>
-      <label>Notes<textarea data-setting="notes" data-default="" rows="5"></textarea></label>
-      <div class="toolbar-row"><button class="button" data-save-settings>Save settings</button><span class="field-hint" data-settings-status></span></div>
+<body>
+<header class="topbar">
+  <a class="brand" href="../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+  <nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../tools/">Tools</a><a href="../library/">Library</a><a href="../guides/">Guides</a><a href="../workspace/" aria-current="page">Workspace</a><a href="../tool/" class="cta">Open the app</a></nav>
+</header>
+<main>
+<section class="app-grid">
+<nav class="side-nav" aria-label="Studio sections"><a href="../">Dashboard</a><a href="../tool/">Area Schedule</a><a href="../workspace/">Workspace</a><a href="../templates/">Templates</a><a href="../reports/">Reports</a><a href="../examples/">Examples</a><a href="../checklists/">QA Checklist</a><a href="../integrations/">Integrations</a><a href="../settings/" aria-current="page">Settings</a><a href="../plans/">Plans</a><a href="../faq/">FAQ</a><a href="../privacy/">Privacy</a></nav>
+<div class="workspace-main">
+<div class="page-title-panel"><p class="eyebrow">Studio</p><h1>Settings</h1><p class="lede">Personal defaults for this device. Settings are stored locally in your browser and never uploaded.</p></div>
+<aside class="ad-unit inline" aria-label="Advertisement">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0268893833921284" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <span class="ad-label">Advertisement</span>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</aside>
+<div class="two-col"><div class="page-title-panel"><div class="mini-form"><label>Organisation name<input data-setting="org" data-default="" placeholder="Your studio"></label><label>Preferred area unit<select data-setting="unit" data-default="m²"><option>m²</option><option>ft²</option><option>ping</option></select></label><label>Default cost rate ($/m²)<input data-setting="rate" data-default="" placeholder="e.g. 1500"></label><button class="button" data-save-settings type="button">Save settings</button><p class="note-line" data-settings-status></p></div></div><article class="workspace-card"><h3>Where settings live</h3><p>Settings are written to this browser's local storage. They follow this device and browser only, and clear when you clear site data.</p><h3 style="margin-top:14px">Reset</h3><p>To reset, clear your browser's site data for this domain. Saved projects in the Workspace are cleared the same way.</p></article></div>
+</div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+      <p>A free studio of browser-side calculators, schedules, and references for architectural area takeoff and CAD drawing production.</p>
     </div>
-  </div></div></section>
-    
-  </main>
-  <footer class="footer"><span>Area Schedule Builder for caddrawingdownload.com</span><a href="../privacy/">Privacy</a></footer>
-  <script>window.SITE_CONFIG = {"title":"Area Schedule Builder","kind":"schedule","fields":[{"id":"rows","label":"Rows: Area Name, Area, Unit Cost, Level, Note","type":"textarea","default":"Lobby,620,4,Level 1,Public zone\nOffice,180,8,Level 2,Typical module","rows":8,"hint":""}],"data":{},"engine":{"columns":["Area Name","Area","Unit Cost","Level","Note"],"qtyIndex":1,"costIndex":2},"examples":[{"title":"First working pass","body":"Area Schedule Builder turns a loose input into a copy-ready output that can be reviewed, saved, or exported."},{"title":"Repeat workflow","body":"The browser workspace keeps saved projects local so repeat visitors can use the same tool without a backend login."},{"title":"Professional review","body":"Use the result as a structured starter, then confirm local rules, project standards, prices, and assumptions before final use."}],"faq":[{"q":"Is Area Schedule Builder free to use?","a":"Yes. This pilot is a free browser-side SaaS utility with copy, save, and JSON export actions."},{"q":"Does it replace a licensed professional?","a":"No. It creates a useful first pass and checking structure; final decisions still need qualified review."},{"q":"Where are saved projects stored?","a":"Saved projects are kept in this browser's localStorage for the static pilot build."}],"limits":["Do not treat generated outputs as legal, code, engineering, tax, or safety certification.","No private credentials are required by this static site.","Ad placements stay outside primary action controls."]};</script>
-  
-  <script src="../saas.js"></script>
+    <div class="footer-col"><h4>Popular tools</h4><a href="../tool/">Area Schedule Builder</a><a href="../tools/room-area/">Room Area Calculator</a><a href="../tools/area-unit-converter/">Area Unit Converter</a><a href="../tools/gross-net-area/">Gross to Net Area</a><a href="../tools/">All tools</a></div><div class="footer-col"><h4>Reference</h4><a href="../library/area-units/">Area Units</a><a href="../library/drawing-symbols/">Drawing Symbols</a><a href="../library/architectural-scales/">Architectural Scales</a><a href="../library/glossary/">Glossary</a></div><div class="footer-col"><h4>Studio</h4><a href="../workspace/">Workspace</a><a href="../templates/">Templates</a><a href="../reports/">Reports</a><a href="../plans/">Plans</a><a href="../privacy/">Privacy</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 caddrawingdownload.com · Area Schedule Builder</span><span>Browser-side tools · No account required</span></div>
+</footer>
+<script src="../saas.js"></script>
 </body>
 </html>

@@ -3,30 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reports | Area Schedule Builder</title>
-  <meta name="description" content="Local report view for saved outputs and project history.">
+  <title>Reports — Area Schedule Builder</title>
+  <meta name="description" content="Roll up saved projects into simple, copyable summaries for issue and review.">
   <link rel="canonical" href="https://area.caddrawingdownload.com/reports/">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Reports — Area Schedule Builder">
+  <meta property="og:description" content="Roll up saved projects into simple, copyable summaries for issue and review.">
+  <meta property="og:url" content="https://area.caddrawingdownload.com/reports/">
   <meta name="google-adsense-account" content="ca-pub-0268893833921284">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0268893833921284" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="../styles.css">
 </head>
-<body style="--bg:#f5f4ef;--panel:#fffdf8;--ink:#232827;--accent:#3b745f;--accent-2:#b57931;--line:#d2d4cb">
-  <header class="topbar">
-    <a class="brand" href="../"><span class="brand-mark">AR</span><span>caddrawingdownload.com</span></a>
-    <nav class="nav" aria-label="Primary">
-      <a href="../tool/">Tool</a>
-      <a href="../templates/">Templates</a>
-      <a href="../workspace/">Workspace</a>
-      <a href="../plans/">Plans</a>
-    </nav>
-  </header>
-  <main>
-    <section class="app-grid"><nav class="side-nav" aria-label="App sections"><a href="../" >Dashboard</a><a href="../tool/" >Tool</a><a href="../workspace/" >Workspace</a><a href="../templates/" >Templates</a><a href="../reports/" aria-current="page">Reports</a><a href="../library/" >Library</a><a href="../examples/" >Examples</a><a href="../checklists/" >Checklists</a><a href="../integrations/" >Integrations</a><a href="../settings/" >Settings</a><a href="../plans/" >Plans</a><a href="../faq/" >FAQ</a></nav><div class="workspace-main"><div class="page-title-panel"><p class="eyebrow">Drawing Studio</p><h1>Reports</h1><p class="lede">Local report view for saved outputs and project history.</p></div><div class="ad-unit" aria-label="Advertisement"><span>Advertisement</span></div><div class="toolbar-row"><button class="button secondary" data-clear-projects>Clear local projects</button></div><div class="card-grid" data-project-list></div></div></section>
-    
-  </main>
-  <footer class="footer"><span>Area Schedule Builder for caddrawingdownload.com</span><a href="../privacy/">Privacy</a></footer>
-  <script>window.SITE_CONFIG = {"title":"Area Schedule Builder","kind":"schedule","fields":[{"id":"rows","label":"Rows: Area Name, Area, Unit Cost, Level, Note","type":"textarea","default":"Lobby,620,4,Level 1,Public zone\nOffice,180,8,Level 2,Typical module","rows":8,"hint":""}],"data":{},"engine":{"columns":["Area Name","Area","Unit Cost","Level","Note"],"qtyIndex":1,"costIndex":2},"examples":[{"title":"First working pass","body":"Area Schedule Builder turns a loose input into a copy-ready output that can be reviewed, saved, or exported."},{"title":"Repeat workflow","body":"The browser workspace keeps saved projects local so repeat visitors can use the same tool without a backend login."},{"title":"Professional review","body":"Use the result as a structured starter, then confirm local rules, project standards, prices, and assumptions before final use."}],"faq":[{"q":"Is Area Schedule Builder free to use?","a":"Yes. This pilot is a free browser-side SaaS utility with copy, save, and JSON export actions."},{"q":"Does it replace a licensed professional?","a":"No. It creates a useful first pass and checking structure; final decisions still need qualified review."},{"q":"Where are saved projects stored?","a":"Saved projects are kept in this browser's localStorage for the static pilot build."}],"limits":["Do not treat generated outputs as legal, code, engineering, tax, or safety certification.","No private credentials are required by this static site.","Ad placements stay outside primary action controls."]};</script>
-  
-  <script src="../saas.js"></script>
+<body>
+<header class="topbar">
+  <a class="brand" href="../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+  <nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../tools/">Tools</a><a href="../library/">Library</a><a href="../guides/">Guides</a><a href="../workspace/" aria-current="page">Workspace</a><a href="../tool/" class="cta">Open the app</a></nav>
+</header>
+<main>
+<section class="app-grid">
+<nav class="side-nav" aria-label="Studio sections"><a href="../">Dashboard</a><a href="../tool/">Area Schedule</a><a href="../workspace/">Workspace</a><a href="../templates/">Templates</a><a href="../reports/" aria-current="page">Reports</a><a href="../examples/">Examples</a><a href="../checklists/">QA Checklist</a><a href="../integrations/">Integrations</a><a href="../settings/">Settings</a><a href="../plans/">Plans</a><a href="../faq/">FAQ</a><a href="../privacy/">Privacy</a></nav>
+<div class="workspace-main">
+<div class="page-title-panel"><p class="eyebrow">Studio</p><h1>Reports</h1><p class="lede">Summarise the work you've saved in this browser into a tidy, copyable report for a meeting or an issue.</p></div>
+<aside class="ad-unit inline" aria-label="Advertisement">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0268893833921284" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <span class="ad-label">Advertisement</span>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</aside>
+<div class="two-col"><article class="workspace-card"><h3>Project count</h3><p style="font-size:2rem;font-weight:800" data-project-count>0</p><p>Saved in this browser.</p></article><article class="workspace-card"><h3>Export options</h3><p>Each saved project can be downloaded as JSON from the Workspace. Schedules also export as CSV for Excel.</p></article></div>
+  <div class="callout amber" style="margin-top:4px"><h3>How to build a report</h3><p>Save results from the tools you used, then open the Workspace to download them. Combine the CSV exports in your spreadsheet for a full project report — see the <a href="../guides/export-to-excel/">Export to Excel</a> guide.</p></div>
+</div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+      <p>A free studio of browser-side calculators, schedules, and references for architectural area takeoff and CAD drawing production.</p>
+    </div>
+    <div class="footer-col"><h4>Popular tools</h4><a href="../tool/">Area Schedule Builder</a><a href="../tools/room-area/">Room Area Calculator</a><a href="../tools/area-unit-converter/">Area Unit Converter</a><a href="../tools/gross-net-area/">Gross to Net Area</a><a href="../tools/">All tools</a></div><div class="footer-col"><h4>Reference</h4><a href="../library/area-units/">Area Units</a><a href="../library/drawing-symbols/">Drawing Symbols</a><a href="../library/architectural-scales/">Architectural Scales</a><a href="../library/glossary/">Glossary</a></div><div class="footer-col"><h4>Studio</h4><a href="../workspace/">Workspace</a><a href="../templates/">Templates</a><a href="../reports/">Reports</a><a href="../plans/">Plans</a><a href="../privacy/">Privacy</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 caddrawingdownload.com · Area Schedule Builder</span><span>Browser-side tools · No account required</span></div>
+</footer>
+<script src="../saas.js"></script>
 </body>
 </html>
