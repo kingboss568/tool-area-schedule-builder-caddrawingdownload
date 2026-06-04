@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parking Space Calculator — Area Schedule Builder</title>
+  <meta name="description" content="Estimate required parking spaces and parking area from floor area and a provision ratio.">
+  <link rel="canonical" href="https://area.caddrawingdownload.com/tools/parking-spaces/">
+  <meta name="theme-color" content="#0f766e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Parking Space Calculator — Area Schedule Builder">
+  <meta property="og:description" content="Estimate required parking spaces and parking area from floor area and a provision ratio.">
+  <meta property="og:url" content="https://area.caddrawingdownload.com/tools/parking-spaces/">
+  <meta name="google-adsense-account" content="ca-pub-0268893833921284">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0268893833921284" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+  <nav class="nav" aria-label="Primary"><a href="../../">Home</a><a href="../../tools/" aria-current="page">Tools</a><a href="../../library/">Library</a><a href="../../guides/">Guides</a><a href="../../workspace/">Workspace</a><a href="../../tool/" class="cta">Open the app</a></nav>
+</header>
+<main>
+<section class="hero">
+<div class="hero-copy"><div class="breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../tools/">Tools</a><span>/</span>Parking Space Calculator</div><p class="eyebrow">Planning</p><h1>Parking Space Calculator</h1><p class="lede">Apply a parking ratio to floor area to estimate the number of bays and the parking footprint needed.</p>
+<div class="hero-meta"><div><strong>Bays</strong><span>Output</span></div><div><strong>~25 m²</strong><span>Bay area</span></div></div>
+</div>
+<div class="hero-art"><svg viewBox="0 0 480 340" role="img" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0f766e"/></linearGradient></defs><rect width="480" height="340" fill="none"/><g stroke="#1f5a52" stroke-width="1"><line x1="0" y1="0" x2="0" y2="340"/><line x1="40" y1="0" x2="40" y2="340"/><line x1="80" y1="0" x2="80" y2="340"/><line x1="120" y1="0" x2="120" y2="340"/><line x1="160" y1="0" x2="160" y2="340"/><line x1="200" y1="0" x2="200" y2="340"/><line x1="240" y1="0" x2="240" y2="340"/><line x1="280" y1="0" x2="280" y2="340"/><line x1="320" y1="0" x2="320" y2="340"/><line x1="360" y1="0" x2="360" y2="340"/><line x1="400" y1="0" x2="400" y2="340"/><line x1="440" y1="0" x2="440" y2="340"/><line x1="0" y1="0" x2="480" y2="0"/><line x1="0" y1="40" x2="480" y2="40"/><line x1="0" y1="80" x2="480" y2="80"/><line x1="0" y1="120" x2="480" y2="120"/><line x1="0" y1="160" x2="480" y2="160"/><line x1="0" y1="200" x2="480" y2="200"/><line x1="0" y1="240" x2="480" y2="240"/><line x1="0" y1="280" x2="480" y2="280"/><line x1="0" y1="320" x2="480" y2="320"/></g><g fill="none" stroke="#7fe9dc" stroke-width="2"><path d="M90 280V120l70-30v190M160 90l90 30v160M250 120l90 20v140"/><path d="M70 280h360"/></g><g stroke="#f6c886" stroke-width="1.5" fill="none"><line x1="105" y1="120" x2="145" y2="120"/><line x1="105" y1="150" x2="145" y2="150"/><line x1="105" y1="180" x2="145" y2="180"/><line x1="105" y1="210" x2="145" y2="210"/><line x1="105" y1="240" x2="145" y2="240"/><line x1="185" y1="150" x2="235" y2="150"/><line x1="185" y1="180" x2="235" y2="180"/><line x1="185" y1="210" x2="235" y2="210"/><line x1="185" y1="240" x2="235" y2="240"/></g></svg></div>
+</section>
+<div class="section"><section class="tool-shell" id="tool">
+  <div class="tool-panel">
+    <div class="panel-heading"><h2>Inputs</h2><span class="pill">Live</span></div>
+    <div class="fields-grid" id="toolFields"></div>
+  </div>
+  <div class="result-panel">
+    <div class="result-toolbar">
+      <h2>Result</h2>
+      <div class="toolbar-row">
+        <button class="button secondary" id="copyExport" type="button">Copy output</button>
+        <button class="button secondary" type="button" data-save-current>Save</button>
+        <button class="button" type="button" data-download-current>Download</button>
+      </div>
+    </div>
+    <div id="toolResult"></div>
+  </div>
+</section></div>
+<aside class="ad-unit" aria-label="Advertisement">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0268893833921284" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <span class="ad-label">Advertisement</span>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</aside>
+<section class="section"><div class="example-grid" id="examples"></div></section>
+<section class="section"><div class="grid-2"><div class="content-band"><div class="section-heading"><h2>Good to know</h2></div><ul class="checklist" id="limits"></ul></div><div class="content-band"><div class="section-heading"><h2>FAQ</h2></div><div id="faq"></div></div></div></section>
+<section class="section"><div class="section-head"><h2>Related tools &amp; guides</h2><p>Keep the workflow moving with connected calculators and references.</p></div>
+  <div class="grid-3"><a class="hub-card" href="../../tools/floor-area-ratio/"><div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V5l8-2v18M13 21V9l6 2v10M3 21h18M8 8h1M8 12h1M8 16h1M16 13h1M16 17h1"/></svg></div><h3>FAR Calculator</h3><p>Density</p><span class="go">Open →</span></a><a class="hub-card" href="../../tools/buildable-area/"><div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><rect x="7" y="7" width="10" height="10" rx="1" stroke-dasharray="2 2"/></svg></div><h3>Buildable Area</h3><p>Site limits</p><span class="go">Open →</span></a></div></section>
+</main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="../../"><span class="brand-mark">A</span><span>caddrawingdownload.com<small>Area Schedule Builder</small></span></a>
+      <p>A free studio of browser-side calculators, schedules, and references for architectural area takeoff and CAD drawing production.</p>
+    </div>
+    <div class="footer-col"><h4>Popular tools</h4><a href="../../tool/">Area Schedule Builder</a><a href="../../tools/room-area/">Room Area Calculator</a><a href="../../tools/area-unit-converter/">Area Unit Converter</a><a href="../../tools/gross-net-area/">Gross to Net Area</a><a href="../../tools/">All tools</a></div><div class="footer-col"><h4>Reference</h4><a href="../../library/area-units/">Area Units</a><a href="../../library/drawing-symbols/">Drawing Symbols</a><a href="../../library/architectural-scales/">Architectural Scales</a><a href="../../library/glossary/">Glossary</a></div><div class="footer-col"><h4>Studio</h4><a href="../../workspace/">Workspace</a><a href="../../templates/">Templates</a><a href="../../reports/">Reports</a><a href="../../plans/">Plans</a><a href="../../privacy/">Privacy</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 caddrawingdownload.com · Area Schedule Builder</span><span>Browser-side tools · No account required</span></div>
+</footer>
+<script>window.SITE_CONFIG = {"title":"Parking Space Calculator","kind":"calculator","fields":[{"id":"floor","label":"Gross floor area (m²)","type":"number","default":"5000","step":"any"},{"id":"ratio","label":"Spaces per 100 m²","type":"number","default":"2","step":"any","hint":"From planning code"},{"id":"bayArea","label":"Area per space incl. aisle (m²)","type":"number","default":"25","step":"any"}],"data":{},"engine":{"outputs":[{"label":"Spaces required","expr":"Math.ceil(floor/100*ratio)","format":"integer","unit":"bays"},{"label":"Parking area needed","expr":"Math.ceil(floor/100*ratio)*bayArea","unit":"m²"},{"label":"Accessible bays (≈5%)","expr":"Math.ceil(Math.ceil(floor/100*ratio)*0.05)","format":"integer","unit":"bays","secondary":true}],"defaultAdvice":"Provision ratios vary widely by city and land use — confirm the local standard."},"examples":[{"title":"Mixed use","body":"Estimate bays per land-use ratio early in a feasibility study."},{"title":"Area budget","body":"See how much site area the required parking will consume."}],"faq":[{"q":"What ratio to use?","a":"Ratios differ by city and use class; some areas now set maximums, not minimums."},{"q":"Why 25 m² a bay?","a":"A bay plus its share of aisle is roughly 23–28 m² in a surface lot."}],"limits":["Results are planning estimates — confirm against local codes, project standards, and supplier data before issue.","Tools run entirely in your browser; nothing you type is uploaded or stored on a server.","Advertising is kept clear of input controls and primary action buttons."]};</script>
+<script src="../../app.js"></script>
+<script src="../../saas.js"></script>
+</body>
+</html>

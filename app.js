@@ -1,3 +1,5 @@
+/* Area Schedule Builder — client tool engine.
+   Config-driven, dependency-free. Every tool runs fully in the browser. */
 const config = window.SITE_CONFIG || {};
 const state = {};
 
@@ -19,6 +21,7 @@ function money(value) {
 
 function formatNumber(value, digits = 2) {
   const number = Number(value || 0);
+  if (!Number.isFinite(number)) return "0";
   return Number.isInteger(number) ? String(number) : number.toFixed(digits);
 }
 
@@ -54,11 +57,13 @@ function renderField(field) {
   const step = field.step ? ` step="${escapeHtml(field.step)}"` : "";
   const min = field.min !== undefined ? ` min="${escapeHtml(field.min)}"` : "";
   const max = field.max !== undefined ? ` max="${escapeHtml(field.max)}"` : "";
-  return `<label class="field"><span>${escapeHtml(field.label)}</span>${hint}<input type="${inputType}" data-field="${field.id}" value="${escapeHtml(value)}"${step}${min}${max}></label>`;
+  const wide = field.wide ? " field-wide" : "";
+  return `<label class="field${wide}"><span>${escapeHtml(field.label)}</span>${hint}<input type="${inputType}" data-field="${field.id}" value="${escapeHtml(value)}"${step}${min}${max}></label>`;
 }
 
 function renderForm() {
-  qs("#toolFields").innerHTML = (config.fields || []).map(renderField).join("");
+  const host = qs("#toolFields");
+  if (host) host.innerHTML = (config.fields || []).map(renderField).join("");
 }
 
 function updateFromEvent(event) {
@@ -87,7 +92,7 @@ function inputs() {
 
 function evaluate(expression, data) {
   try {
-    return Function("inputs", `"use strict"; const { ${Object.keys(data).join(", ")} } = inputs; return (${expression});`)(data);
+    return Function("inputs", "Math", `"use strict"; const { ${Object.keys(data).join(", ")} } = inputs; return (${expression});`)(data, Math);
   } catch (error) {
     return 0;
   }
@@ -95,8 +100,9 @@ function evaluate(expression, data) {
 
 function formatOutput(value, output) {
   if (output.format === "money") return money(value);
-  if (output.format === "percent") return `${formatNumber(value, 1)}%`;
-  if (output.format === "integer") return formatNumber(value, 0);
+  if (output.format === "percent") return `${formatNumber(value, output.digits ?? 1)}%`;
+  if (output.format === "integer") return formatNumber(Math.round(Number(value || 0)), 0);
+  if (output.format === "ratio") return `1 : ${formatNumber(value, output.digits ?? 0)}`;
   return `${formatNumber(value, output.digits ?? 2)}${output.unit ? ` ${output.unit}` : ""}`;
 }
 
@@ -112,6 +118,14 @@ function replaceTokens(text, data) {
   });
 }
 
+function barChart(items) {
+  const max = Math.max(...items.map((item) => Math.abs(item.value)), 1);
+  return `<div class="bar-chart">${items.map((item) => {
+    const pct = Math.max(2, Math.min(100, (Math.abs(item.value) / max) * 100));
+    return `<div class="bar-row"><span>${escapeHtml(item.label)}</span><div class="bar-track"><i style="width:${pct}%"></i></div><strong>${escapeHtml(item.display)}</strong></div>`;
+  }).join("")}</div>`;
+}
+
 function calculatorTool() {
   const data = inputs();
   const outputs = (config.engine?.outputs || []).map((output) => ({
@@ -122,22 +136,66 @@ function calculatorTool() {
     .filter((rule) => !rule.if || Boolean(evaluate(rule.if, data)))
     .map((rule) => replaceTokens(rule.text, data));
   if (!rules.length) rules.push(config.engine?.defaultAdvice || "Inputs are within the expected planning range. Review assumptions before using the result.");
-  const html = `<div class="metric-grid">${outputs.map((output) => `<div><span>${escapeHtml(output.label)}</span><strong>${escapeHtml(formatOutput(output.value, output))}</strong></div>`).join("")}</div><ul class="clean-list">${rules.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
-  const exportText = `${config.title}\n${outputs.map((output) => `${output.label}: ${formatOutput(output.value, output)}`).join("\n")}\n\nRecommendations\n- ${rules.join("\n- ")}`;
-  return resultShell(`${outputs.length} calculated outputs ready.`, html, exportText);
+  const primary = outputs.filter((output) => !output.secondary);
+  const chart = config.engine?.chart
+    ? barChart(primary.filter((o) => o.format !== "ratio").map((output) => ({ label: output.label, value: Number(output.value) || 0, display: formatOutput(output.value, output) })))
+    : "";
+  const html = `<div class="metric-grid">${outputs.map((output) => `<div${output.secondary ? ' class="metric-sub"' : ""}><span>${escapeHtml(output.label)}</span><strong>${escapeHtml(formatOutput(output.value, output))}</strong>${output.note ? `<em>${escapeHtml(output.note)}</em>` : ""}</div>`).join("")}</div>${chart}<ul class="clean-list">${rules.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+  const exportText = `${config.title}\n${outputs.map((output) => `${output.label}: ${formatOutput(output.value, output)}`).join("\n")}\n\nNotes\n- ${rules.join("\n- ")}`;
+  return resultShell(`${primary.length} calculated outputs ready.`, html, exportText);
+}
+
+const CONVERT_BASE = {
+  // area to square metres
+  area: { "Square metres (m²)": 1, "Square feet (ft²)": 0.09290304, "Square yards (yd²)": 0.83612736, "Square inches (in²)": 0.00064516, "Acres": 4046.8564224, "Hectares": 10000, "Square kilometres (km²)": 1000000, "Ping (坪)": 3.305785, "Square miles (mi²)": 2589988.110336 },
+  length: { "Metres (m)": 1, "Millimetres (mm)": 0.001, "Centimetres (cm)": 0.01, "Feet (ft)": 0.3048, "Inches (in)": 0.0254, "Yards (yd)": 0.9144, "Kilometres (km)": 1000, "Miles (mi)": 1609.344 }
+};
+
+function convertTool() {
+  const data = inputs();
+  const units = config.engine?.units || CONVERT_BASE[config.engine?.dimension || "area"] || CONVERT_BASE.area;
+  const names = Object.keys(units);
+  const from = data.from && units[data.from] ? data.from : names[0];
+  const to = data.to && units[data.to] ? data.to : names[1] || names[0];
+  const value = Number(data.value || 0);
+  const base = value * units[from];
+  const result = base / units[to];
+  const rows = names.map((name) => ({ name, value: base / units[name] }));
+  const html = `<div class="metric-grid"><div><span>${escapeHtml(from)}</span><strong>${formatNumber(value, 4)}</strong></div><div class="metric-accent"><span>${escapeHtml(to)}</span><strong>${formatNumber(result, 4)}</strong></div></div><div class="table-wrap"><table><thead><tr><th>Unit</th><th>Equivalent value</th></tr></thead><tbody>${rows.map((row) => `<tr${row.name === to ? ' class="row-active"' : ""}><td>${escapeHtml(row.name)}</td><td>${formatNumber(row.value, 4)}</td></tr>`).join("")}</tbody></table></div>`;
+  const exportText = `${formatNumber(value, 4)} ${from} =\n` + rows.map((row) => `${formatNumber(row.value, 4)} ${row.name}`).join("\n");
+  return resultShell(`${formatNumber(value, 4)} ${escapeHtml(from)} = <strong>${formatNumber(result, 4)} ${escapeHtml(to)}</strong>`, html, exportText);
+}
+
+function geometryTool() {
+  const data = inputs();
+  const points = String(data.points || "").split("\n").map((line) => line.split(/[ ,\t]+/).map(Number).filter((n) => !Number.isNaN(n))).filter((pair) => pair.length >= 2);
+  let area = 0;
+  let perimeter = 0;
+  for (let i = 0; i < points.length; i++) {
+    const [x1, y1] = points[i];
+    const [x2, y2] = points[(i + 1) % points.length];
+    area += x1 * y2 - x2 * y1;
+    perimeter += Math.hypot(x2 - x1, y2 - y1);
+  }
+  area = Math.abs(area) / 2;
+  const unit = data.unit || "m";
+  const html = `<div class="metric-grid"><div class="metric-accent"><span>Enclosed area</span><strong>${formatNumber(area, 3)} ${escapeHtml(unit)}²</strong></div><div><span>Perimeter</span><strong>${formatNumber(perimeter, 3)} ${escapeHtml(unit)}</strong></div><div><span>Vertices</span><strong>${points.length}</strong></div></div><p class="note-line">Computed with the shoelace formula. List vertices in order (clockwise or counter-clockwise); the polygon closes automatically.</p>`;
+  return resultShell(`Polygon area: <strong>${formatNumber(area, 3)} ${escapeHtml(unit)}²</strong>`, html, `Area: ${formatNumber(area, 3)} ${unit}^2\nPerimeter: ${formatNumber(perimeter, 3)} ${unit}\nVertices: ${points.length}`);
 }
 
 function libraryTool() {
   const data = inputs();
   const query = String(data.query || "").toLowerCase();
   const category = data.category || "All";
-  const items = (config.data?.items || []).filter((item) => {
+  const all = config.data?.items || [];
+  const items = all.filter((item) => {
     const text = `${item.title} ${item.category} ${item.use} ${item.note} ${item.tags || ""}`.toLowerCase();
     return (!query || text.includes(query)) && (category === "All" || item.category === category);
-  }).slice(0, 12);
-  const html = `<div class="result-list">${items.map((item) => `<article><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.note)}</p><dl><dt>Use</dt><dd>${escapeHtml(item.use || "Reference")}</dd><dt>Caution</dt><dd>${escapeHtml(item.caution || "Verify against project standards.")}</dd></dl></article>`).join("") || "<p>No match yet. Try a shorter keyword or All categories.</p>"}</div>`;
-  const exportText = items.map((item) => `${item.title} | ${item.category} | ${item.use || ""} | ${item.caution || ""}`).join("\n");
-  return resultShell(`${items.length} reference items matched.`, html, exportText);
+  });
+  const shown = items.slice(0, 30);
+  const html = `<div class="result-list">${shown.map((item) => `<article><h3>${escapeHtml(item.title)}${item.code ? `<span class="tag">${escapeHtml(item.code)}</span>` : ""}</h3><p>${escapeHtml(item.note)}</p><dl><dt>Use</dt><dd>${escapeHtml(item.use || "Reference")}</dd><dt>Watch</dt><dd>${escapeHtml(item.caution || "Verify against project standards.")}</dd></dl></article>`).join("") || "<p>No match yet. Try a shorter keyword or the All category.</p>"}</div>`;
+  const exportText = shown.map((item) => `${item.title} | ${item.category} | ${item.use || ""} | ${item.caution || ""}`).join("\n");
+  return resultShell(`${items.length} of ${all.length} reference items matched.`, html, exportText);
 }
 
 function builderTool() {
@@ -159,15 +217,21 @@ function scheduleTool() {
   const columns = config.engine?.columns || ["Item", "Qty", "Unit", "Notes"];
   const qtyIndex = config.engine?.qtyIndex ?? 1;
   const costIndex = config.engine?.costIndex ?? 2;
-  const total = rows.reduce((sum, row) => sum + Number(row[qtyIndex] || 0) * Number(row[costIndex] || 0), 0);
+  const money_on = config.engine?.money !== false && costIndex >= 0;
+  const total = money_on ? rows.reduce((sum, row) => sum + Number(row[qtyIndex] || 0) * Number(row[costIndex] || 0), 0) : 0;
+  const qtyTotal = qtyIndex >= 0 ? rows.reduce((sum, row) => sum + Number(row[qtyIndex] || 0), 0) : 0;
   const warnings = [];
   rows.forEach((row, index) => {
-    if (row.length < columns.length) warnings.push(`Row ${index + 1} is missing fields.`);
-    if (Number.isNaN(Number(row[qtyIndex] || 0))) warnings.push(`Row ${index + 1} needs a numeric quantity.`);
+    if (row.length < columns.length) warnings.push(`Row ${index + 1} (${row[0] || "untitled"}) is missing fields.`);
+    if (qtyIndex >= 0 && Number.isNaN(Number(row[qtyIndex] || 0))) warnings.push(`Row ${index + 1} needs a numeric value in "${columns[qtyIndex]}".`);
   });
-  const html = `<div class="metric-grid"><div><span>Rows</span><strong>${rows.length}</strong></div><div><span>Estimated total</span><strong>${money(total)}</strong></div><div><span>Warnings</span><strong>${warnings.length}</strong></div></div><div class="table-wrap"><table><thead><tr>${columns.map((col) => `<th>${escapeHtml(col)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${columns.map((_, index) => `<td>${escapeHtml(row[index] || "")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${warnings.length ? `<ul class="warn-list">${warnings.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : `<p class="good">No obvious schedule gaps found.</p>`}`;
+  const metrics = [`<div><span>Rows</span><strong>${rows.length}</strong></div>`];
+  if (qtyIndex >= 0) metrics.push(`<div><span>${escapeHtml(columns[qtyIndex])} total</span><strong>${formatNumber(qtyTotal, 2)}</strong></div>`);
+  if (money_on) metrics.push(`<div class="metric-accent"><span>Estimated total</span><strong>${money(total)}</strong></div>`);
+  metrics.push(`<div><span>Warnings</span><strong>${warnings.length}</strong></div>`);
+  const html = `<div class="metric-grid">${metrics.join("")}</div><div class="table-wrap"><table><thead><tr><th>#</th>${columns.map((col) => `<th>${escapeHtml(col)}</th>`).join("")}</tr></thead><tbody>${rows.map((row, i) => `<tr><td>${i + 1}</td>${columns.map((_, index) => `<td>${escapeHtml(row[index] || "")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${warnings.length ? `<ul class="warn-list">${warnings.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : `<p class="good">No obvious schedule gaps found.</p>`}`;
   const csv = `${columns.join(",")}\n${rows.map((row) => columns.map((_, index) => `"${String(row[index] || "").replaceAll('"', '""')}"`).join(",")).join("\n")}`;
-  return resultShell(`${rows.length} rows prepared.`, html, csv);
+  return resultShell(`${rows.length} rows prepared${money_on ? ` · ${money(total)} estimated` : ""}.`, html, csv);
 }
 
 function checklistTool() {
@@ -178,7 +242,7 @@ function checklistTool() {
   const risk = selectedItems.reduce((sum, item) => sum + Number(item.weight || 1), 0);
   const maxRisk = items.reduce((sum, item) => sum + Number(item.weight || 1), 0) || 1;
   const score = Math.max(0, 100 - (risk / maxRisk) * 100);
-  const html = `<div class="metric-grid"><div><span>Open items</span><strong>${selectedItems.length}</strong></div><div><span>Readiness</span><strong>${score.toFixed(0)}%</strong></div><div><span>Risk points</span><strong>${risk}</strong></div></div><div class="result-list">${selectedItems.map((item) => `<article><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.note || "Resolve before final issue.")}</p><small>${escapeHtml(item.category || "Review")}</small></article>`).join("") || "<p class=\"good\">No risk items selected. Keep a final human review step.</p>"}</div>`;
+  const html = `<div class="metric-grid"><div><span>Open items</span><strong>${selectedItems.length}</strong></div><div class="metric-accent"><span>Readiness</span><strong>${score.toFixed(0)}%</strong></div><div><span>Risk points</span><strong>${risk}</strong></div></div><div class="meter"><i style="width:${score.toFixed(0)}%"></i></div><div class="result-list">${selectedItems.map((item) => `<article><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.note || "Resolve before final issue.")}</p><small>${escapeHtml(item.category || "Review")}</small></article>`).join("") || "<p class=\"good\">No open risk items selected. Keep a final human review step.</p>"}</div>`;
   const exportText = `${config.title}\nReadiness: ${score.toFixed(0)}%\nOpen items:\n- ${selectedItems.map((item) => `${item.title}: ${item.note || ""}`).join("\n- ")}`;
   return resultShell(`Readiness score: <strong>${score.toFixed(0)}%</strong>`, html, exportText);
 }
@@ -190,76 +254,44 @@ function matrixTool() {
   const weightValues = Object.values(weights);
   const ranked = rows.map((row) => {
     const score = weightValues.reduce((sum, weight, index) => sum + Number(row[index + 1] || 0) * weight, 0);
-    return { name: row[0] || "Option", score, row };
+    return { name: row[0] || "Option", score };
   }).sort((a, b) => b.score - a.score);
   const html = `<div class="result-list">${ranked.map((item, index) => `<article><h3>${index + 1}. ${escapeHtml(item.name)}</h3><p>Weighted score: <strong>${item.score.toFixed(2)}</strong></p><small>${Object.keys(weights).join(" / ")}</small></article>`).join("")}</div>`;
   const exportText = ranked.map((item, index) => `${index + 1}. ${item.name}: ${item.score.toFixed(2)}`).join("\n");
   return resultShell(`${ranked.length} options ranked.`, html, exportText);
 }
 
-function promptTool() {
-  const data = inputs();
-  const variants = config.engine?.variants || [
-    { title: "Prompt", body: "Create {{projectType}} with {{style}} and practical constraints." }
-  ];
-  const html = `<div class="prompt-stack">${variants.map((item) => `<article><h3>${escapeHtml(replaceTokens(item.title, data))}</h3><p>${escapeHtml(replaceTokens(item.body, data))}</p></article>`).join("")}</div>`;
-  const exportText = variants.map((item) => `${replaceTokens(item.title, data)}\n${replaceTokens(item.body, data)}`).join("\n\n");
-  return resultShell(`${variants.length} prompt variants generated.`, html, exportText);
-}
-
-function hexToRgb(hex) {
-  const clean = String(hex || "#000000").replace("#", "");
-  return [0, 2, 4].map((index) => parseInt(clean.slice(index, index + 2), 16) || 0);
-}
-
-function luminance(hex) {
-  const values = hexToRgb(hex).map((value) => {
-    const channel = value / 255;
-    return channel <= 0.03928 ? channel / 12.92 : Math.pow((channel + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * values[0] + 0.7152 * values[1] + 0.0722 * values[2];
-}
-
-function contrastTool() {
-  const data = inputs();
-  const fg = data.foreground || "#12312d";
-  const bg = data.background || "#ffffff";
-  const l1 = luminance(fg);
-  const l2 = luminance(bg);
-  const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
-  const normal = ratio >= 4.5 ? "Pass" : "Review";
-  const large = ratio >= 3 ? "Pass" : "Review";
-  const html = `<div class="metric-grid"><div><span>Contrast</span><strong>${ratio.toFixed(2)}:1</strong></div><div><span>Normal text</span><strong>${normal}</strong></div><div><span>Large text</span><strong>${large}</strong></div></div><div class="swatch-row"><div class="swatch" style="background:${fg};color:${bg}"><span>Foreground</span><strong>${escapeHtml(fg)}</strong></div><div class="swatch" style="background:${bg};color:${fg}"><span>Background</span><strong>${escapeHtml(bg)}</strong></div></div>`;
-  return resultShell(`Contrast ratio: <strong>${ratio.toFixed(2)}:1</strong>`, html, `Contrast ratio: ${ratio.toFixed(2)}:1\nNormal text: ${normal}\nLarge text: ${large}`);
-}
-
 function renderResult() {
+  if (!qs("#toolResult")) return;
   const map = {
     calculator: calculatorTool,
+    convert: convertTool,
+    geometry: geometryTool,
     library: libraryTool,
     builder: builderTool,
     schedule: scheduleTool,
     checklist: checklistTool,
-    matrix: matrixTool,
-    prompt: promptTool,
-    contrast: contrastTool
+    matrix: matrixTool
   };
   qs("#toolResult").innerHTML = (map[config.kind] || builderTool)();
 }
 
 function renderStaticContent() {
-  qs("#examples").innerHTML = (config.examples || []).map((item) => `<article><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`).join("");
-  qs("#faq").innerHTML = (config.faq || []).map((item) => `<details><summary>${escapeHtml(item.q)}</summary><p>${escapeHtml(item.a)}</p></details>`).join("");
-  qs("#limits").innerHTML = (config.limits || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  if (qs("#examples")) qs("#examples").innerHTML = (config.examples || []).map((item) => `<article><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`).join("");
+  if (qs("#faq")) qs("#faq").innerHTML = (config.faq || []).map((item) => `<details><summary>${escapeHtml(item.q)}</summary><p>${escapeHtml(item.a)}</p></details>`).join("");
+  if (qs("#limits")) qs("#limits").innerHTML = (config.limits || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
 }
 
 async function copyExport() {
   const text = window.lastExportText || "";
   if (!text) return;
+  const button = qs("#copyExport");
   try {
     await navigator.clipboard.writeText(text);
-    qs("#copyExport").textContent = "Copied";
-    setTimeout(() => qs("#copyExport").textContent = "Copy output", 1200);
+    if (button) {
+      button.textContent = "Copied";
+      setTimeout(() => button.textContent = "Copy output", 1200);
+    }
   } catch {
     const area = document.createElement("textarea");
     area.value = text;
@@ -271,13 +303,15 @@ async function copyExport() {
 }
 
 function boot() {
+  if (!qs("#toolFields")) return;
   initState();
   renderForm();
   renderResult();
   renderStaticContent();
   qs("#toolFields").addEventListener("input", updateFromEvent);
   qs("#toolFields").addEventListener("change", updateFromEvent);
-  qs("#copyExport").addEventListener("click", copyExport);
+  const copy = qs("#copyExport");
+  if (copy) copy.addEventListener("click", copyExport);
 }
 
 boot();
