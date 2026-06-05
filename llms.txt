@@ -1,0 +1,45 @@
+Area Schedule Builder
+
+Area Schedule Builder is a practical cad studio workspace for BIM coordinator teams who need a working tool, reference pages, exportable notes, and SEO-ready guidance in one static site.
+
+Key sections:
+- https://area.caddrawingdownload.com/
+- https://area.caddrawingdownload.com/tool/
+- https://area.caddrawingdownload.com/workspace/
+- https://area.caddrawingdownload.com/reports/
+- https://area.caddrawingdownload.com/guides/
+- https://area.caddrawingdownload.com/library/
+- https://area.caddrawingdownload.com/templates/
+- https://area.caddrawingdownload.com/compare/
+- https://area.caddrawingdownload.com/checklists/
+- https://area.caddrawingdownload.com/integrations/
+- https://area.caddrawingdownload.com/settings/
+- https://area.caddrawingdownload.com/plans/
+- https://area.caddrawingdownload.com/faq/
+- https://area.caddrawingdownload.com/privacy/
+- https://area.caddrawingdownload.com/about/
+- https://area.caddrawingdownload.com/guides/preflight-a-dwg-package-1/
+- https://area.caddrawingdownload.com/guides/standardize-a-drawing-set-2/
+- https://area.caddrawingdownload.com/guides/prepare-a-client-handoff-3/
+- https://area.caddrawingdownload.com/guides/audit-a-template-4/
+- https://area.caddrawingdownload.com/guides/compare-block-options-5/
+- https://area.caddrawingdownload.com/guides/document-drawing-assumptions-6/
+- https://area.caddrawingdownload.com/guides/preflight-a-dwg-package-7/
+- https://area.caddrawingdownload.com/guides/standardize-a-drawing-set-8/
+- https://area.caddrawingdownload.com/guides/prepare-a-client-handoff-9/
+- https://area.caddrawingdownload.com/guides/audit-a-template-10/
+- https://area.caddrawingdownload.com/guides/compare-block-options-11/
+- https://area.caddrawingdownload.com/guides/document-drawing-assumptions-12/
+- https://area.caddrawingdownload.com/guides/preflight-a-dwg-package-13/
+- https://area.caddrawingdownload.com/guides/standardize-a-drawing-set-14/
+- https://area.caddrawingdownload.com/guides/prepare-a-client-handoff-15/
+- https://area.caddrawingdownload.com/guides/audit-a-template-16/
+- https://area.caddrawingdownload.com/guides/compare-block-options-17/
+- https://area.caddrawingdownload.com/guides/document-drawing-assumptions-18/
+- https://area.caddrawingdownload.com/guides/preflight-a-dwg-package-19/
+- https://area.caddrawingdownload.com/guides/standardize-a-drawing-set-20/
+- https://area.caddrawingdownload.com/guides/prepare-a-client-handoff-21/
+- https://area.caddrawingdownload.com/guides/audit-a-template-22/
+- https://area.caddrawingdownload.com/guides/compare-block-options-23/
+- https://area.caddrawingdownload.com/guides/document-drawing-assumptions-24/
+- https://area.caddrawingdownload.com/guides/preflight-a-dwg-package-25/
